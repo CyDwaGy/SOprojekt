@@ -10,6 +10,7 @@ void sig_handler_sigusr1(int signum){
 }
 
 int toSleep(int time){
+  sig=0;
   signal(SIGUSR1,sig_handler_sigusr1); // zarejestrowanie Sygnalu
   printf("Sleep\n");
   sleep(time);
@@ -21,6 +22,7 @@ int toSleep(int time){
 }
 
 int main(){
-  toSleep(10);
+  while(1)
+    toSleep(10);
   return 0;
 }
