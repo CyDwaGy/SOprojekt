@@ -8,5 +8,9 @@ int main(int arc,char * argv[]){
   char * destiny=argv[2];
   toSleep(10);
   printf("%d\n",tryDelete(source,destiny));
-  return 0;
+        if (stat("xd.txt", &results) == 0)
+            printf("File size: %d\n", results.st_size);
+        else
+            printf("Blad.\n");
+        return 0;
 }
