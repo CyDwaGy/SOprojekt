@@ -1,2 +1,2 @@
 all:
-	gcc SyncMain.c Filip.c mateusz.c -o SyncMain
+	gcc SyncMain.c Filip.c marcin.c mateusz.c -o SyncMain
