@@ -1,9 +1,11 @@
 //
 // Created by Filip on 05.04.2022.
 //
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <sys/stat.h>
 #include <string.h>
+#include "Filip.h"
 int backslash(char ** path)
 {
     char * tmp1 = *path;
@@ -47,14 +49,4 @@ int CheckDateDiff(char *path1, char *path2)
     if (file1_time == file2_time) return 1;
     else return 0;
 }
-int main()
-{
-    char* directory = "\\users\\TheFi\\test.txt";
-    char* directory2 = "\\users\\TheFi\\test.txt";
-    backslash(&directory);
-    printf("%s\n", directory);
-    printf("%d\n", CheckIfKatalog(directory));
-    printf("%d\n", CheckIfExist(directory, "test.txt"));
-    printf("%d\n", CheckDateDiff(directory, directory2));
-    return 0;
-}
+
