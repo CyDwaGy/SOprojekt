@@ -1,6 +1,8 @@
 #include "mateusz.h"
 #include "Filip.h"
 
+#include <stdio.h>
+
 int main(){
   char * path="./jooooo/";
   printf("%d\n",  CheckIfKatalog(path));
