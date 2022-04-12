@@ -11,11 +11,7 @@ void sig_handler_sigusr1(int signum){
 }
 
 int toSleep(int time);
-int tryDelete(char * source, char * destiny){
- 
-
- return 0;
-}
+int tryDelete(char * source,char * destiny);
 
 int toSleep(int time){
   if(time<0)
@@ -25,10 +21,22 @@ int toSleep(int time){
   printf("Sleep\n");
   sleep(time);
   if(sig!=0)
-    printf("Wake up after SIGUSR1\n");
+    return 1;
   else
-    printf("Wake up after %ds\n",time);
+    return 2;
+}
+
+int tryDelete(char * source,char * destiny)//linux nie pozwala na katalog i plik o tej samej nazwie w jednym miejscu
+{
+  if(CheckIfKatalog(destiny)==-1)return 0;
+  if(CheckIfKatalog(source)==-1) 
+  {
+    if(remove(destiny)==-1)
+      return -1;
+    else return 1;
+  }
   return 0;
 }
+
 
 
