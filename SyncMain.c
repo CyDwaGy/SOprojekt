@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 int main(int arc,char * argv[]){
-CopyMaly("/home/marcin/SOprojekt/test.txt" , "/home/marcin/SOprojekt/wynik.txt");
+CopyMaly(argv[1] , argv[2]);
 /*
   char * source=argv[1];
   char * destiny=argv[2];
