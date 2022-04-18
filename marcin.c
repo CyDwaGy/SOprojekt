@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define buf_size 16384
+#define buf_size 8192
 
 long long int CheckSize(char * fd){
   struct stat buf;
@@ -15,6 +15,7 @@ long long int CheckSize(char * fd){
   int size=buf.st_size;
   return size;
 }
+/*
 int CopyMaly(char*pathF, char* pathT)
 {
         unsigned char * buffor;
@@ -48,6 +49,38 @@ int CopyMaly(char*pathF, char* pathT)
                 	free(buffor);
 		}
         }
+        close(plikF);
+        close(plikT);
+        return 1;
+}
+*/
+
+
+int CopyMaly(char*pathF, char* pathT)
+{
+//        char *  buffor = (char *) malloc(buf_size);
+	char buffor[buf_size];
+        int plikF = open(pathF, O_RDONLY);
+	if (plikF<0)
+		return -1;
+        int plikT = open(pathT, O_CREAT|O_WRONLY| O_EXCL,0666);
+	if(plikT<0)
+		return -1;
+	ssize_t nread;
+	while(nread = read(plikF,buffor,sizeof buffor), nread>0)
+	{
+		char * out=buffor;
+		ssize_t nwritten;
+		do{
+			nwritten = write(plikT, out, nread);
+			if(nwritten >=0)
+			{
+				nread -= nwritten;
+				out += nwritten;
+			}
+		}while(nread > 0);
+	}
+//	free(buffor);
         close(plikF);
         close(plikT);
         return 1;
