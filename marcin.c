@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/mman.h>
 
 #define buf_size 8192
 
@@ -87,3 +88,27 @@ int CopyMaly(char*pathF, char* pathT)
 }
 
 
+int CopyDuzy(char * pathF,char * pathT)
+{
+	int fileF = open(pathF, O_RDWR);
+	if(fileF<0)
+		return -1;
+	struct stat statbuf;
+	fstat(fileF, &statbuf);
+	char * map  = mmap(NULL, statbuf.st_size,PROT_READ|PROT_WRITE,MAP_SHARED,fileF,0);
+	if(map == MAP_FAILED){
+		printf("Maping failed\n");
+		return -1;
+	}
+	close(fileF);
+	int fileT = open(pathT, O_CREAT|O_WRONLY| O_EXCL,0666);
+	if(fileT<0)
+		return -1;
+	long int size=statbuf.st_size;
+	ssize_t n=0;
+	do{
+		n = write(fileT,map=map+n,size-=n);
+	}while(size>0);
+	close(fileT);
+	return 0;
+}
