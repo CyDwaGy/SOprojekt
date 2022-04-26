@@ -2,9 +2,11 @@
 #include "Filip.h"
 #include "marcin.h"
 #include <stdio.h>
+#include "gn.h"
 
 int main(int arc,char * argv[]){
-CopyMaly(argv[1] , argv[2]);
+
+CopyDir(argv[1] , argv[2], 0);
 /*
   char * source=argv[1];
   char * destiny=argv[2];
@@ -16,4 +18,5 @@ CopyMaly(argv[1] , argv[2]);
             printf("Blad.\n");
         return 0;
 */
+return 0;
 }
