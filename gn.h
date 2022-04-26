@@ -1,6 +1,6 @@
 #ifndef SOPROJEKT_GN_H
 #define SOPROJEKT_GN_H
-int CopyDir(char*pathF, char* pathT, int recurrence);
-
+int CopyDir(char*pathF, char* pathT, int recurrence, int size);
+int Copy(char*pathF, char* pathT, long long int size);
 
 #endif
