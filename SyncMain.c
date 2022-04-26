@@ -6,7 +6,7 @@
 
 int main(int arc,char * argv[]){
 
-CopyDir(argv[1] , argv[2], 1);
+CopyDir(argv[1] , argv[2], 1, 1000);
 /*
   char * source=argv[1];
   char * destiny=argv[2];

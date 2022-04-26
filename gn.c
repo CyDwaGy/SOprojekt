@@ -23,18 +23,20 @@ int Copy(char*pathF, char* pathT, long long int size){
 }
 
 int CopyDir(char*pathF, char* pathT, int recurrence, long long int size){
+    printf("%s, %s",pathF,pathT);
     DIR *d;
     struct dirent *dir;
-    d = opendir(".");
+    d = opendir(pathF);
     if (d) {
         while ((dir = readdir(d)) != NULL) {
             if (!((!strcmp(dir->d_name,"." )) || (!strcmp(dir->d_name,".." )))){ // nie zaczytujemy '.' i '..'
             printf("\n%s ", dir->d_name);
-            if (CheckIfKatalog(dir->d_name)) {
+            char tmpF[10000];
+            sprintf(tmpF, "%s/%s", pathF, dir->d_name);
+            if (CheckIfKatalog(tmpF)) {
                 printf("%s", "Katalog");
                 if (recurrence == 1) {
-                    char tmpF[1000], tmpT[1000];
-                    sprintf(tmpF, "%s/%s", pathF, dir->d_name);
+                    char tmpT[10000];
                     sprintf(tmpT, "%s/%s", pathT, dir->d_name);
                     printf("\n\n rekurencja \n\n");
                     CopyDir(tmpF, tmpT, 1, size);
