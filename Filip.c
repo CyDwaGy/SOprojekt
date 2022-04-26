@@ -19,6 +19,19 @@ int backslash(char ** path)
         asprintf (path, "%s", tmp2);
     }
 }
+int slash(char ** path)
+{
+    char * tmp1 = *path;
+    char tmp2[200];
+    int length = strlen(tmp1);
+    char slash = '/';
+    char ostatnia = tmp1[length-1];
+    if(ostatnia != slash)
+    {
+        sprintf (tmp2, "%s/", tmp1);
+        asprintf (path, "%s", tmp2);
+    }
+}
 int CheckIfKatalog( char *path)
 {
     struct stat type;
