@@ -18,7 +18,7 @@ int Copy(char*pathF, char* pathT, long long int size){
     else{
         ret = CopyMaly(pathF, pathT);
     }
-    //log jesli ret=-1
+    //log jesli ret=-1 albo 0
     return ret;
 }
 
@@ -30,14 +30,16 @@ int CopyDir(char*pathF, char* pathT, int recurrence, long long int size){
         while ((dir = readdir(d)) != NULL) {
             if (!((!strcmp(dir->d_name,"." )) || (!strcmp(dir->d_name,".." )))){ // nie zaczytujemy '.' i '..'
             printf("\n%s ", dir->d_name);
-            if (CheckIfKatalog(dir->d_name))
+            if (CheckIfKatalog(dir->d_name)) {
                 printf("%s", "Katalog");
-                if (recurrence == 1){
-                    char tmpF[200], tmpT[200];
-                    sprintf|(tmpF,"%s/%s",pathF,dir->d_name);
-                    sprintf|(tmpT,"%s/%s",pathT,dir->d_name);
-                    printf("\n\n%s %s \n\n",tmpF,tmpT);
+                if (recurrence == 1) {
+                    char tmpF[1000], tmpT[1000];
+                    sprintf(tmpF, "%s/%s", pathF, dir->d_name);
+                    sprintf(tmpT, "%s/%s", pathT, dir->d_name);
+                    printf("\n\n rekurencja \n\n");
+                    CopyDir(tmpF, tmpT, 1, size);
                 }
+            }
             else
                 printf("%s", "plik");
         }
