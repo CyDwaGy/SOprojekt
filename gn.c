@@ -16,13 +16,17 @@ int CopyDir(char*pathF, char* pathT, int recurrence){
     d = opendir(".");
     if (d) {
         while ((dir = readdir(d)) != NULL) {
+            if !((!strcmp(dir->d_name,"." )) || (!strcmp(dir->d_name,".." ))){
             printf("%s\n ", dir->d_name);
             if (CheckIfKatalog(dir->d_name))
-                printf("%s", "Katalog")
+                printf("%s", "Katalog");
             else
-                printf("%s", "plik")
+                printf("%s", "plik");
+        }
         }
         closedir(d);
+
+
     }
     return 0;
 }
