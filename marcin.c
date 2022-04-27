@@ -13,7 +13,7 @@
 long long int CheckSize(char * fd){
   struct stat buf;
   stat(fd, &buf);
-  int size=buf.st_size;
+  long long int size=buf.st_size;
   return size;
 }
 /*
