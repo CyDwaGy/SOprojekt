@@ -11,6 +11,9 @@
 #include <dirent.h>
 #include <string.h>
 #include <syslog.h>
+#include <time.h>
+#include <utime.h>
+#include <sys/stat.h>
 
 void Log(char * log){
     openlog("SyncMain", LOG_PID, LOG_USER);
@@ -21,6 +24,9 @@ void Log(char * log){
 int Copy(char*pathF, char* pathT, unsigned long long int size){
     int ret;
     char tmp[100];
+    struct stat foo;
+    time_t mtime;
+    struct utimbuf new_times;
     if (CheckSize(pathF) > size){
         ret = CopyDuzy(pathF, pathT);
     }
@@ -29,6 +35,11 @@ int Copy(char*pathF, char* pathT, unsigned long long int size){
     }
     sprintf(tmp,"Skopiowano plik %s do %s",pathF , pathT);
     Log(tmp);
+    stat(pathF, &foo);
+    mtime = foo.st_mtime; /* seconds since the epoch */
+    new_times.actime = foo.st_atime; /* keep atime unchanged */
+    new_times.modtime = foo.st_mtime;    /* set mtime to current time */
+    utime(pathT, &new_times);
     return ret;
 }
 
