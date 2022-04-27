@@ -20,13 +20,15 @@ void Log(char * log){
 
 int Copy(char*pathF, char* pathT, unsigned long long int size){
     int ret;
+    char tmp[100];
     if (CheckSize(pathF) > size){
         ret = CopyDuzy(pathF, pathT);
     }
     else{
         ret = CopyMaly(pathF, pathT);
     }
-    Log("Skopiowano plik %s do %s",pathF , pathT);
+    sprintf(tmp,"Skopiowano plik %s do %s",pathF , pathT)
+    Log(tmp);
     return ret;
 }
 
@@ -35,7 +37,7 @@ int DelDir(char*pathF, char* pathT, int recurrence){
     struct dirent *dir;
     d = opendir(pathT);
     int x;
-    char tmpF[10000], tmpT[10000];
+    char tmpF[10000], tmpT[10000], tmp[100];
     if (d) {
         while ((dir = readdir(d)) != NULL) {
             if (!((!strcmp(dir->d_name,"." )) || (!strcmp(dir->d_name,".." )))){
@@ -44,7 +46,8 @@ int DelDir(char*pathF, char* pathT, int recurrence){
                 x = CheckIfExist(tmpF);
                     if (x == 0) {
                         delDir(tmpT);
-                        Log("Usunięto plik %s", tmpT);
+                        sprintf(tmp,"Usunięto plik %s", tmpT);
+                        Log(tmp);
                     }
                     else if (x==1){
                         if (CheckIfKatalog(tmpT)){
