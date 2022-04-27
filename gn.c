@@ -1,3 +1,4 @@
+
 #include "gn.h"
 #include "marcin.h"
 #include "mateusz.h"
@@ -27,24 +28,31 @@ int CopyDir(char*pathF, char* pathT, int recurrence, long long int size){
     DIR *d;
     struct dirent *dir;
     d = opendir(pathF);
+   char tmpF[10000], tmpT[10000];
     if (d) {
         while ((dir = readdir(d)) != NULL) {
             if (!((!strcmp(dir->d_name,"." )) || (!strcmp(dir->d_name,".." )))){ // nie zaczytujemy '.' i '..'
             printf("\n%s ", dir->d_name);
-            char tmpF[10000];
+            sprintf(tmpT, "%s/%s", pathT, dir->d_name);
             sprintf(tmpF, "%s/%s", pathF, dir->d_name);
             if (CheckIfKatalog(tmpF)) {
                 printf("%s", "Katalog");
                 if (recurrence == 1) {
-                    char tmpT[10000];
-                    sprintf(tmpT, "%s/%s", pathT, dir->d_name);
+
                     printf("\n\n rekurencja \n\n");
-                    CopyDir(tmpF, tmpT, 1, size);
+		    printf("%d\n",CheckIfKatalog(tmpF));
+		    if(CheckIfKatalog(tmpT)==-1)
+			{
+			printf("ASDASDAS\n");
+			mkdir(tmpT,0777);
+			} 
+                   CopyDir(tmpF, tmpT, 1, size);
+
                 }
             }
             else
                 printf("%s", "plik");
-            Copy(pathF, pathT, size);
+            Copy(tmpF, tmpT, size);
         }
         }
         closedir(d);

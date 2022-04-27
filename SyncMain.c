@@ -1,5 +1,6 @@
 #include "Filip.h"
 #include "marcin.h"
+#include "gn.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,9 +12,6 @@ int main(int arc,char * argv[]){
 	int T = 300;
 	int R = 0;
 	unsigned long long int S = _1G;
-	S*=2;
-	printf("%llu\n",S);
-	printf("%llu\n",S*2);
 	char * source=argv[1];
 	char * destiny=argv[2];
 	printf("%s\t%s\n",source,destiny);
@@ -52,6 +50,6 @@ int main(int arc,char * argv[]){
 	printf("Parametr S to %llu\n",S);
 	printf("Parametr T to %d\n",T);
 	printf("Parametr R to %d\n",R);
-	printf("Usunieto %s\nreturn %d",source,delDir(source));
+	CopyDir(source,destiny,R,S);
 	return 0;
 }
