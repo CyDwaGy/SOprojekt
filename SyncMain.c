@@ -15,7 +15,6 @@ int main(int arc,char * argv[]){
 	unsigned long long int S = _1G;
 	char * source=argv[1];
 	char * destiny=argv[2];
-	printf("%s\t%s\n",source,destiny);
 	if(CheckIfKatalog(source)==1)
 		printf("%s jest katalogiem\n",source);
 	else{
@@ -46,12 +45,24 @@ int main(int arc,char * argv[]){
 			}
 			S=sizeToULLI(argv[++i]);
 		}
-		printf("%s\n",argv[i]);
 	}
 	printf("Parametr S to %llu\n",S);
 	printf("Parametr T to %d\n",T);
 	printf("Parametr R to %d\n",R);
-    DelDir(source, destiny, R);
-	CopyDir(source,destiny,R,S);
+	int a;
+    while(1)
+   {
+	printf("Rozpoczecie\n");
+        DelDir(source, destiny, R);
+        CopyDir(source,destiny,R,S);
+	printf("Sen\n");
+        a=toSleep(T);
+	if(a==2)
+		printf("Budzenie po %d\n",T);
+	else if (a==1)
+		printf("Budzenie po Siguser1\n");
+	else
+		printf("Blad");
+    }
 	return 0;
 }

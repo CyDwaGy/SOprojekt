@@ -24,7 +24,6 @@ int toSleep(int time){
     return -1;
   sig=0;
   signal(SIGUSR1,sig_handler_sigusr1); // zarejestrowanie Sygnalu
-  printf("Sleep\n");
   sleep(time);
   if(sig!=0)
     return 1;
