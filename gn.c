@@ -33,19 +33,18 @@ int DelDir(char*pathF, char* pathT, int recurrence){
             if (!((!strcmp(dir->d_name,"." )) || (!strcmp(dir->d_name,".." )))){
                 sprintf(tmpT, "%s/%s", pathT, dir->d_name);
                 sprintf(tmpF, "%s/%s", pathF, dir->d_name);
-                switch(CheckIfExist(tmpF)){
-                    case -1://nie istnieje
+                x = CheckIfExist(tmpF));
+                    if (x == 0)
                         delDir(tmpT);
-                        break;
-                    case 0://katalog
-                        if (recurrence == 1){
-                            DelDir(tmpF,tmpT,1);
+                    else if (x==1){
+                        if (CheckIfKatalog(tmpT)){
+                            if (recurrence == 1){
+                                DelDir(tmpF,tmpT,1);
+                            }
                         }
-                        break;
-                }
-
             }
         }
+    }
     }
     return 0;
 }
