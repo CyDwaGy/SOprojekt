@@ -51,8 +51,10 @@ int CopyDir(char*pathF, char* pathT, int recurrence, long long int size){
                 }
             }
             else
-                printf("%s", "plik");
-            Copy(tmpF, tmpT, size);
+		{
+                	printf("%s", "plik");
+            		Copy(tmpF, tmpT, size);
+		}
         }
         }
         closedir(d);
