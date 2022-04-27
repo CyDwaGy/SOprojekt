@@ -10,6 +10,13 @@
 #include <sys/mman.h>
 #include <dirent.h>
 #include <string.h>
+#include <syslog.h>
+
+void Log(char * log){
+    openlog("SyncMain", LOG_PID, LOG_USER);
+    syslog(LOG_INFO,log);
+    closelog();
+}
 
 int Copy(char*pathF, char* pathT, unsigned long long int size){
     int ret;
@@ -19,7 +26,7 @@ int Copy(char*pathF, char* pathT, unsigned long long int size){
     else{
         ret = CopyMaly(pathF, pathT);
     }
-    //log jesli ret=-1 albo 0
+    Log("Skopiowano plik %s do %s",pathF , pathT);
     return ret;
 }
 
@@ -35,8 +42,10 @@ int DelDir(char*pathF, char* pathT, int recurrence){
                 sprintf(tmpT, "%s/%s", pathT, dir->d_name);
                 sprintf(tmpF, "%s/%s", pathF, dir->d_name);
                 x = CheckIfExist(tmpF);
-                    if (x == 0)
+                    if (x == 0) {
                         delDir(tmpT);
+                        Log("Usunięto plik %s", tmpT);
+                    }
                     else if (x==1){
                         if (CheckIfKatalog(tmpT)){
                             if (recurrence == 1){
