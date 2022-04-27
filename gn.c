@@ -27,13 +27,14 @@ int DelDir(char*pathF, char* pathT, int recurrence){
     DIR *d;
     struct dirent *dir;
     d = opendir(pathT);
+    int x;
     char tmpF[10000], tmpT[10000];
     if (d) {
         while ((dir = readdir(d)) != NULL) {
             if (!((!strcmp(dir->d_name,"." )) || (!strcmp(dir->d_name,".." )))){
                 sprintf(tmpT, "%s/%s", pathT, dir->d_name);
                 sprintf(tmpF, "%s/%s", pathF, dir->d_name);
-                x = CheckIfExist(tmpF));
+                x = CheckIfExist(tmpF);
                     if (x == 0)
                         delDir(tmpT);
                     else if (x==1){
