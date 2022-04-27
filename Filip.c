@@ -39,7 +39,7 @@ int CheckIfKatalog( char *path)
     if (S_ISDIR(type.st_mode) == 0) return 0;
     else return 1;
 }
-int CheckIfExist(char *path, char *plik)
+int CheckIfExist(char *path)
 {
     if(CheckIfKatalog(path)==-1)return 0;
     else return 1;
