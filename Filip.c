@@ -41,11 +41,8 @@ int CheckIfKatalog( char *path)
 }
 int CheckIfExist(char *path, char *plik)
 {
-    if(CheckIfKatalog(path)==-1)return -1;
-    char buffer[200];
-    sprintf (buffer, "%s%s", path, plik);
-    if(CheckIfKatalog(buffer) == 0) return 1;
-    else return 0;
+    if(CheckIfKatalog(path)==-1)return 0;
+    else return 1;
 }
 int CheckDateDiff(char *path1, char *path2)
 {
