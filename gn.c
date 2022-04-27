@@ -27,7 +27,7 @@ int Copy(char*pathF, char* pathT, unsigned long long int size){
     else{
         ret = CopyMaly(pathF, pathT);
     }
-    sprintf(tmp,"Skopiowano plik %s do %s",pathF , pathT)
+    sprintf(tmp,"Skopiowano plik %s do %s",pathF , pathT);
     Log(tmp);
     return ret;
 }
