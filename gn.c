@@ -23,6 +23,33 @@ int Copy(char*pathF, char* pathT, unsigned long long int size){
     return ret;
 }
 
+int DelDir(char*pathF, char* pathT, int recurrence){
+    DIR *d;
+    struct dirent *dir;
+    d = opendir(pathT);
+    char tmpF[10000], tmpT[10000];
+    if (d) {
+        while ((dir = readdir(d)) != NULL) {
+            if (!((!strcmp(dir->d_name,"." )) || (!strcmp(dir->d_name,".." )))){
+                sprintf(tmpT, "%s/%s", pathT, dir->d_name);
+                sprintf(tmpF, "%s/%s", pathF, dir->d_name);
+                switch(CheckIfExist(tmpF)){
+                    case -1://nie istnieje
+                        delDir(tmpT);
+                        break;
+                    case 0://katalog
+                        if (recurrence == 1){
+                            DelDir(tmpF,tmpT,1);
+                        }
+                        break;
+                }
+
+            }
+        }
+    }
+    return 0;
+}
+
 int CopyDir(char*pathF, char* pathT, int recurrence, unsigned long long int size){
     printf("%s, %s",pathF,pathT);
     DIR *d;

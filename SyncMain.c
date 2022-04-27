@@ -51,6 +51,7 @@ int main(int arc,char * argv[]){
 	printf("Parametr S to %llu\n",S);
 	printf("Parametr T to %d\n",T);
 	printf("Parametr R to %d\n",R);
+    DelDir(source, destiny, R);
 	CopyDir(source,destiny,R,S);
 	return 0;
 }
