@@ -101,7 +101,7 @@ int CopyDir(char*pathF, char* pathT, int recurrence, unsigned long long int size
             else
 		{
                 	printf("%s", "plik");
-                    if(CheckDateDiff(tmpF, tmpT))
+                    if(!CheckDateDiff(tmpF, tmpT) || !CheckIfExist(tmpT))
             		Copy(tmpF, tmpT, size);
 		}
         }
