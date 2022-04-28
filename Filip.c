@@ -39,6 +39,13 @@ int CheckIfKatalog( char *path)
     if (S_ISDIR(type.st_mode) == 0) return 0;
     else return 1;
 }
+int CheckIfRegular( char *path)
+{
+    struct stat type;
+    if(stat(path, &type)!=0) return -1;
+    if (S_ISREG(type.st_mode) == 0) return 0;
+    else return 1;
+}
 int CheckIfExist(char *path)
 {
     if(CheckIfKatalog(path)==-1)return 0;

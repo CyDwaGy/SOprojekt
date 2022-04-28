@@ -33,12 +33,14 @@ int Copy(char *pathF, char *pathT, unsigned long long int size) {
         ret = CopyMaly(pathF, pathT);
     }
     sprintf(tmp, "Skopiowano plik %s do %s", pathF, pathT);
-    Log(tmp);
+
     stat(pathF, &foo);
     mtime = foo.st_mtime; /* seconds since the epoch */
     new_times.actime = foo.st_atime; /* keep atime unchanged */
     new_times.modtime = foo.st_mtime;    /* set mtime to current time */
     utime(pathT, &new_times);
+    if()
+    Log(tmp);
     return ret;
 }
 
@@ -54,7 +56,7 @@ int DelDir(char *pathF, char *pathT, int recurrence) {
                 sprintf(tmpT, "%s/%s", pathT, dir->d_name);
                 sprintf(tmpF, "%s/%s", pathF, dir->d_name);
                 x = CheckIfExist(tmpF);
-                if (x == 0) {
+                if (x == 0 && CheckIfRegular(tmpF)) {
                     delDir(tmpT);
                     sprintf(tmp, "Usunięto plik %s", tmpT);
                     Log(tmp);
@@ -90,7 +92,8 @@ int CopyDir(char *pathF, char *pathT, int recurrence, unsigned long long int siz
                     }
                 } else {
                     if (!CheckDateDiff(tmpF, tmpT) || !CheckIfExist(tmpT))
-                        Copy(tmpF, tmpT, size);
+                        if(CheckIfRegular(tmpF))
+                            Copy(tmpF, tmpT, size);
                 }
             }
         }

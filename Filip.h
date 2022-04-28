@@ -6,5 +6,5 @@ int backslash(char ** path);
 int CheckIfKatalog( char *path);
 int CheckIfExist(char *path);
 int CheckDateDiff(char *path1, char *path2);
-
+int CheckIfRegular( char *path);
 #endif 
