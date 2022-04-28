@@ -69,6 +69,7 @@ int DelDir(char *pathF, char *pathT, int recurrence) {
             }
         }
     }
+    closedir(d);
     return 0;
 }
 

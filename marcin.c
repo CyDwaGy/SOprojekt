@@ -16,45 +16,6 @@ long long int CheckSize(char * fd){
   long long int size=buf.st_size;
   return size;
 }
-/*
-int CopyMaly(char*pathF, char* pathT)
-{
-        unsigned char * buffor;
-        int plikF = open(pathF, O_RDONLY);
-        int plikT = open(pathT, O_CREAT|O_WRONLY);
-        long long int size=CheckSize(pathF);
-        struct stat st;
-        stat(pathF, &st);
-        chmod(pathT, st.st_mode);
-        if(size<buf_size){
-                buffor =  malloc(size);
-                read(plikF,buffor,size);
-                write(plikT,buffor,size);
-                free(buffor);
-        }
-        else
-        {
-                buffor = malloc(buf_size);
-                while(size>=buf_size)
-                {
-                        size-=buf_size;
-                        read(plikF, buffor,buf_size);
-                        write(plikT,buffor,buf_size);
-                }
-                free(buffor);
-		if(size>0)
-		{
-        	        buffor = malloc(size);
-	                read(plikF, buffor,size);
-	                write(plikT,buffor,size);
-                	free(buffor);
-		}
-        }
-        close(plikF);
-        close(plikT);
-        return 1;
-}
-*/
 
 
 int CopyMaly(char*pathF, char* pathT)
@@ -64,7 +25,7 @@ int CopyMaly(char*pathF, char* pathT)
         int plikF = open(pathF, O_RDONLY);
 	if (plikF<0)
 		return -1;
-        int plikT = open(pathT, O_CREAT|O_WRONLY| O_EXCL,0666);
+        int plikT = open(pathT, O_CREAT|O_WRONLY,0666);
 	if(plikT<0)
 		return -1;
 	ssize_t nread;
@@ -101,7 +62,7 @@ int CopyDuzy(char * pathF,char * pathT)
 		return -1;
 	}
 	close(fileF);
-	int fileT = open(pathT, O_CREAT|O_WRONLY| O_EXCL,0666);
+	int fileT = open(pathT, O_CREAT|O_WRONLY,0666);
 	if(fileT<0)
 		return -1;
 	long int size=statbuf.st_size;
