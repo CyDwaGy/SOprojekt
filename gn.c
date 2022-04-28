@@ -39,7 +39,6 @@ int Copy(char *pathF, char *pathT, unsigned long long int size) {
     new_times.actime = foo.st_atime; /* keep atime unchanged */
     new_times.modtime = foo.st_mtime;    /* set mtime to current time */
     utime(pathT, &new_times);
-    if()
     Log(tmp);
     return ret;
 }
