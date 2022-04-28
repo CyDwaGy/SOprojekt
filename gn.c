@@ -17,13 +17,13 @@
 
 void Log(char *log) {
     openlog("SyncMain", LOG_PID, LOG_USER);
-    syslog(LOG_INFO, log);
+    syslog(LOG_INFO, "%s",log);
     closelog();
 }
 
 int Copy(char *pathF, char *pathT, unsigned long long int size) {
     int ret;
-    char tmp[100];
+    char tmp[11000];
     struct stat foo;
     time_t mtime;
     struct utimbuf new_times;
@@ -48,7 +48,7 @@ int DelDir(char *pathF, char *pathT, int recurrence) {
     struct dirent *dir;
     d = opendir(pathT);
     int x;
-    char tmpF[10000], tmpT[10000], tmp[100];
+    char tmpF[10000], tmpT[10000], tmp[11000];
     if (d) {
         while ((dir = readdir(d)) != NULL) {
             if (!((!strcmp(dir->d_name, ".")) || (!strcmp(dir->d_name, "..")))) {
