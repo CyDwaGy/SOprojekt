@@ -55,7 +55,7 @@ int DelDir(char *pathF, char *pathT, int recurrence) {
                 sprintf(tmpT, "%s/%s", pathT, dir->d_name);
                 sprintf(tmpF, "%s/%s", pathF, dir->d_name);
                 x = CheckIfExist(tmpF);
-                if (x == 0 && CheckIfRegular(tmpF)) {
+                if (x == 0 && CheckIfRegular(tmpT)==1) {
                     delDir(tmpT);
                     sprintf(tmp, "Usunięto plik %s", tmpT);
                     Log(tmp);
