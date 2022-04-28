@@ -86,7 +86,7 @@ int CopyDir(char *pathF, char *pathT, int recurrence, unsigned long long int siz
                 if (CheckIfKatalog(tmpF)) {
                     if (recurrence == 1) {
                         if (CheckIfKatalog(tmpT) == -1) {
-                            mkdir(tmpT, 0777);
+                            mkdir(tmpT, 0666);
                         }
                         CopyDir(tmpF, tmpT, 1, size);
                     }
