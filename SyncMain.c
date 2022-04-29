@@ -9,6 +9,40 @@
 #define _1G 1073741824
 #define _1M 1048576
 #define _1K 1024
+
+static void start_daemon()
+{
+    pid_t pid;
+
+    pid = fork();
+
+    if (pid < 0)
+        exit(EXIT_FAILURE);
+
+    // Rodzic konczy 
+    if (pid > 0)
+        exit(EXIT_SUCCESS);
+
+    // Potomek przejmuje kontrone
+    if (setsid() < 0)
+        exit(EXIT_FAILURE);
+
+
+
+    pid = fork();
+
+    if (pid < 0)
+        exit(EXIT_FAILURE);
+
+     // Potomek przejmuje kontrone
+    if (pid > 0)
+        exit(EXIT_SUCCESS);
+
+    //zmiana permisji
+    umask(0);
+
+}
+
 int main(int arc,char * argv[]){
 	int T = 300;
 	int R = 0;
@@ -53,23 +87,24 @@ int main(int arc,char * argv[]){
 	char tmp[100];
 	source[strlen(source)-1] = '\0';
 	destiny[strlen(destiny)-1] = '\0';
+	start_daemon();
     while(1)
    {
-	printf("Synchronizacja\n");
+//	printf("Synchronizacja\n");
         DelDir(source, destiny, R);
         CopyDir(source,destiny,R,S);
-	printf("Sen\n");
+//	printf("Sen\n");
         a=toSleep(T);
 	if(a==2){
 		sprintf(tmp, "Budzenie po %ds", T);
                 Log(tmp);
-		printf("Budzenie po %ds\n",T);
+//		printf("Budzenie po %ds\n",T);
 	}
 	else if (a==1)
 	{
 		sprintf(tmp,"Budzenie po Siguser1");
                 Log(tmp);
-		printf("Budzenie po Siguser1\n");
+//		printf("Budzenie po Siguser1\n");
 	}
 	else
 		printf("Blad");

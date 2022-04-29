@@ -34,7 +34,6 @@ int Copy(char *pathF, char *pathT, unsigned long long int size) {
     }
     if(ret==1){
     sprintf(tmp, "Skopiowano plik %s do %s", pathF, pathT);
-    printf("Skopiowano plik %s do %s\n", pathF, pathT);
     stat(pathF, &foo);
     mtime = foo.st_mtime; /* seconds since the epoch */
     new_times.actime = foo.st_atime; /* keep atime unchanged */
@@ -43,7 +42,6 @@ int Copy(char *pathF, char *pathT, unsigned long long int size) {
 }
     else{
 	sprintf(tmp, "Nieudane kopiowanie plik %s do %s", pathF, pathT);
-    printf("Nieudane kopiowanie plik %s do %s\n", pathF, pathT);
 	}
 
     Log(tmp);
@@ -102,7 +100,6 @@ int CopyDir(char *pathF, char *pathT, int recurrence, unsigned long long int siz
                 } else {
                     if (CheckDateDiff(tmpF, tmpT)==1 || CheckIfExist(tmpT)==0)
                         if(dir->d_type==DT_REG){
-				printf("%s  regular %d link %d \n",tmpF,CheckIfRegular(tmpF),CheckIfLink(tmpF));
                             Copy(tmpF, tmpT, size);}
                 }
             }
