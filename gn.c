@@ -83,9 +83,10 @@ int CopyDir(char *pathF, char *pathT, int recurrence, unsigned long long int siz
             if (!((!strcmp(dir->d_name, ".")) || (!strcmp(dir->d_name, "..")))) { // nie zaczytujemy '.' i '..'
                 sprintf(tmpT, "%s/%s", pathT, dir->d_name);
                 sprintf(tmpF, "%s/%s", pathF, dir->d_name);
-                if (CheckIfKatalog(tmpF)) {
+		printf("%s\t\t\t%s\n",tmpT,tmpF);
+                if (CheckIfKatalog(tmpF)==1) {
                     if (recurrence == 1) {
-                        if (CheckIfKatalog(tmpT) == -1) {
+                        if (CheckIfExist(tmpT) == 0) {
                             mkdir(tmpT, 0666);
                         }
                         CopyDir(tmpF, tmpT, 1, size);
