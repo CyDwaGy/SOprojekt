@@ -85,9 +85,11 @@ int CopyDir(char *pathF, char *pathT, int recurrence, unsigned long long int siz
     struct dirent *dir;
     d = opendir(pathF);
     char tmpF[10000], tmpT[10000];
+	struct stat st;
     if (d) {
         while ((dir = readdir(d)) != NULL) {
             if (!((!strcmp(dir->d_name, ".")) || (!strcmp(dir->d_name, "..")))) { // nie zaczytujemy '.' i '..'
+		lstat(dir->d_name, &st);
                 sprintf(tmpT, "%s/%s", pathT, dir->d_name);
                 sprintf(tmpF, "%s/%s", pathF, dir->d_name);
                 if (CheckIfKatalog(tmpF)==1) {
@@ -99,8 +101,9 @@ int CopyDir(char *pathF, char *pathT, int recurrence, unsigned long long int siz
                     }
                 } else {
                     if (CheckDateDiff(tmpF, tmpT)==1 || CheckIfExist(tmpT)==0)
-                        if(CheckIfRegular(tmpF)==1 && CheckIfKatalog(tmpF)==0 && CheckIfLink(tmpF)==0)
-                            Copy(tmpF, tmpT, size);
+                        if(dir->d_type==DT_REG){
+				printf("%s  regular %d link %d \n",tmpF,CheckIfRegular(tmpF),CheckIfLink(tmpF));
+                            Copy(tmpF, tmpT, size);}
                 }
             }
         }
