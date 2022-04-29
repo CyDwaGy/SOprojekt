@@ -32,13 +32,18 @@ int Copy(char *pathF, char *pathT, unsigned long long int size) {
     } else {
         ret = CopyMaly(pathF, pathT);
     }
+    if(ret==1){
     sprintf(tmp, "Skopiowano plik %s do %s", pathF, pathT);
-
     stat(pathF, &foo);
     mtime = foo.st_mtime; /* seconds since the epoch */
     new_times.actime = foo.st_atime; /* keep atime unchanged */
     new_times.modtime = foo.st_mtime;    /* set mtime to current time */
     utime(pathT, &new_times);
+}
+    else{
+	sprintf(tmp, "Nieudane kopiowanie plik %s do %s", pathF, pathT);
+	}
+
     Log(tmp);
     return ret;
 }
@@ -78,22 +83,24 @@ int CopyDir(char *pathF, char *pathT, int recurrence, unsigned long long int siz
     struct dirent *dir;
     d = opendir(pathF);
     char tmpF[10000], tmpT[10000];
+	struct stat st;
     if (d) {
         while ((dir = readdir(d)) != NULL) {
             if (!((!strcmp(dir->d_name, ".")) || (!strcmp(dir->d_name, "..")))) { // nie zaczytujemy '.' i '..'
+		lstat(dir->d_name, &st);
                 sprintf(tmpT, "%s/%s", pathT, dir->d_name);
                 sprintf(tmpF, "%s/%s", pathF, dir->d_name);
-                if (CheckIfKatalog(tmpF)) {
+                if (CheckIfKatalog(tmpF)==1) {
                     if (recurrence == 1) {
-                        if (CheckIfKatalog(tmpT) == -1) {
-                            mkdir(tmpT, 0666);
+                        if (CheckIfExist(tmpT) == 0) {
+                            mkdir(tmpT, 0777);
                         }
                         CopyDir(tmpF, tmpT, 1, size);
                     }
                 } else {
-                    if (!CheckDateDiff(tmpF, tmpT) || !CheckIfExist(tmpT))
-                        if(CheckIfRegular(tmpF))
-                            Copy(tmpF, tmpT, size);
+                    if (CheckDateDiff(tmpF, tmpT)==1 || CheckIfExist(tmpT)==0)
+                        if(dir->d_type==DT_REG){
+                            Copy(tmpF, tmpT, size);}
                 }
             }
         }

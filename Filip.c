@@ -6,51 +6,35 @@
 #include <sys/stat.h>
 #include <string.h>
 #include "Filip.h"
-int backslash(char ** path)
-{
-    char * tmp1 = *path;
-    char tmp2[200];
-    int length = strlen(tmp1);
-    char slash = '\\';
-    char ostatnia = tmp1[length-1];
-    if(ostatnia != slash)
-    {
-        sprintf (tmp2, "%s\\", tmp1);
-        asprintf (path, "%s", tmp2);
-    }
-}
-int slash(char ** path)
-{
-    char * tmp1 = *path;
-    char tmp2[200];
-    int length = strlen(tmp1);
-    char slash = '/';
-    char ostatnia = tmp1[length-1];
-    if(ostatnia != slash)
-    {
-        sprintf (tmp2, "%s/", tmp1);
-        asprintf (path, "%s", tmp2);
-    }
-}
 int CheckIfKatalog( char *path)
 {
     struct stat type;
     if(stat(path, &type)!=0) return -1;
-    if (S_ISDIR(type.st_mode) == 0) return 0;
-    else return 1;
+    if (S_ISDIR(type.st_mode) == 1) return 1;
+    else return 0;
 }
 int CheckIfRegular( char *path)
 {
     struct stat type;
     if(stat(path, &type)!=0) return -1;
-    if (S_ISREG(type.st_mode) == 0) return 0;
-    else return 1;
+    if (S_ISREG(type.st_mode) == 1) return 1;
+    else return 0;
 }
 int CheckIfExist(char *path)
 {
-    if(CheckIfKatalog(path)==-1)return 0;
-    else return 1;
+    struct stat type;
+    if(stat(path, &type)==1) return 1;
+    else return 0;
 }
+int CheckIfLink(char *path)
+{
+    struct stat type;
+    if(stat(path, &type)!=0) return -1;
+    if (S_ISLNK(type.st_mode) == 1) return 1;
+    else return 0;
+
+}
+
 int CheckDateDiff(char *path1, char *path2)
 {
     if(CheckIfKatalog(path1) != 0) return -1;
