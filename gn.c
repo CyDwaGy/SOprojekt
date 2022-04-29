@@ -32,13 +32,20 @@ int Copy(char *pathF, char *pathT, unsigned long long int size) {
     } else {
         ret = CopyMaly(pathF, pathT);
     }
+    if(ret==1){
     sprintf(tmp, "Skopiowano plik %s do %s", pathF, pathT);
-
+    printf("Skopiowano plik %s do %s\n", pathF, pathT);
     stat(pathF, &foo);
     mtime = foo.st_mtime; /* seconds since the epoch */
     new_times.actime = foo.st_atime; /* keep atime unchanged */
     new_times.modtime = foo.st_mtime;    /* set mtime to current time */
     utime(pathT, &new_times);
+}
+    else{
+	sprintf(tmp, "Nieudane kopiowanie plik %s do %s", pathF, pathT);
+    printf("Nieudane kopiowanie plik %s do %s\n", pathF, pathT);
+	}
+
     Log(tmp);
     return ret;
 }
@@ -78,12 +85,13 @@ int CopyDir(char *pathF, char *pathT, int recurrence, unsigned long long int siz
     struct dirent *dir;
     d = opendir(pathF);
     char tmpF[10000], tmpT[10000];
+    strcpy(tmpF,pathF);
+    strcpy(tmpT,pathT);
     if (d) {
         while ((dir = readdir(d)) != NULL) {
             if (!((!strcmp(dir->d_name, ".")) || (!strcmp(dir->d_name, "..")))) { // nie zaczytujemy '.' i '..'
-                sprintf(tmpT, "%s/%s", pathT, dir->d_name);
-                sprintf(tmpF, "%s/%s", pathF, dir->d_name);
-		printf("%s\t\t\t%s\n",tmpT,tmpF);
+                sprintf(tmpT, "%s/%s", tmpT, dir->d_name);
+                sprintf(tmpF, "%s/%s", tmpF, dir->d_name);
                 if (CheckIfKatalog(tmpF)==1) {
                     if (recurrence == 1) {
                         if (CheckIfExist(tmpT) == 0) {
