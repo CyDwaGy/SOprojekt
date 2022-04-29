@@ -85,13 +85,11 @@ int CopyDir(char *pathF, char *pathT, int recurrence, unsigned long long int siz
     struct dirent *dir;
     d = opendir(pathF);
     char tmpF[10000], tmpT[10000];
-    strcpy(tmpF,pathF);
-    strcpy(tmpT,pathT);
     if (d) {
         while ((dir = readdir(d)) != NULL) {
             if (!((!strcmp(dir->d_name, ".")) || (!strcmp(dir->d_name, "..")))) { // nie zaczytujemy '.' i '..'
-                sprintf(tmpT, "%s/%s", tmpT, dir->d_name);
-                sprintf(tmpF, "%s/%s", tmpF, dir->d_name);
+                sprintf(tmpT, "%s/%s", pathT, dir->d_name);
+                sprintf(tmpF, "%s/%s", pathF, dir->d_name);
                 if (CheckIfKatalog(tmpF)==1) {
                     if (recurrence == 1) {
                         if (CheckIfExist(tmpT) == 0) {
