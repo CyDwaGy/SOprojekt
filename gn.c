@@ -98,8 +98,8 @@ int CopyDir(char *pathF, char *pathT, int recurrence, unsigned long long int siz
                         CopyDir(tmpF, tmpT, 1, size);
                     }
                 } else {
-                    if (!CheckDateDiff(tmpF, tmpT) || !CheckIfExist(tmpT))
-                        if(CheckIfRegular(tmpF))
+                    if (CheckDateDiff(tmpF, tmpT)==1 || CheckIfExist(tmpT)==0)
+                        if(CheckIfRegular(tmpF)==1 && CheckIfKatalog(tmpF)==0 && CheckIfLink(tmpF)==0)
                             Copy(tmpF, tmpT, size);
                 }
             }

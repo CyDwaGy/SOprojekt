@@ -51,6 +51,8 @@ int main(int arc,char * argv[]){
 	printf("Parametr R to %d\n",R);
 	int a;
 	char tmp[100];
+	source[strlen(source)-1] = '\0';
+	destiny[strlen(destiny)-1] = '\0';
     while(1)
    {
 	printf("Synchronizacja\n");

@@ -26,6 +26,15 @@ int CheckIfExist(char *path)
     if(stat(path, &type)==1) return 1;
     else return 0;
 }
+int CheckIfLink(char *path)
+{
+    struct stat type;
+    if(stat(path, &type)!=0) return -1;
+    if (S_ISLNK(type.st_mode) == 1) return 1;
+    else return 0;
+
+}
+
 int CheckDateDiff(char *path1, char *path2)
 {
     if(CheckIfKatalog(path1) != 0) return -1;
