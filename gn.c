@@ -60,12 +60,15 @@ int DelDir(char *pathF, char *pathT, int recurrence) {
                 sprintf(tmpT, "%s/%s", pathT, dir->d_name);
                 sprintf(tmpF, "%s/%s", pathF, dir->d_name);
                 x = CheckIfExist(tmpF);
-                if (x == 0 && CheckIfRegular(tmpT)==1) {
+
+
+                printf("%d %d\n",x  , CheckIfExist(tmpT));
+                if(dir->d_type!=DT_LNK && x == 0) {
                     delDir(tmpT);
                     sprintf(tmp, "Usunięto plik %s", tmpT);
                     Log(tmp);
                 } else if (x == 1) {
-                    if (CheckIfKatalog(tmpT)) {
+                    if (CheckIfKatalog(tmpF)==1) {
                         if (recurrence == 1) {
                             DelDir(tmpF, tmpT, 1);
                         }
