@@ -53,6 +53,7 @@ int DelDir(char *pathF, char *pathT, int recurrence) {
     struct dirent *dir;
     d = opendir(pathT);
     int x;
+    struct stat st;
     char tmpF[10000], tmpT[10000], tmp[11000];
     if (d) {
         while ((dir = readdir(d)) != NULL) {
@@ -60,9 +61,6 @@ int DelDir(char *pathF, char *pathT, int recurrence) {
                 sprintf(tmpT, "%s/%s", pathT, dir->d_name);
                 sprintf(tmpF, "%s/%s", pathF, dir->d_name);
                 x = CheckIfExist(tmpF);
-
-
-                printf("%d %d\n",x  , CheckIfExist(tmpT));
                 if(dir->d_type!=DT_LNK && x == 0) {
                     delDir(tmpT);
                     sprintf(tmp, "Usunięto plik %s", tmpT);
@@ -86,7 +84,7 @@ int CopyDir(char *pathF, char *pathT, int recurrence, unsigned long long int siz
     struct dirent *dir;
     d = opendir(pathF);
     char tmpF[10000], tmpT[10000];
-	struct stat st;
+    struct stat st;
     if (d) {
         while ((dir = readdir(d)) != NULL) {
             if (!((!strcmp(dir->d_name, ".")) || (!strcmp(dir->d_name, "..")))) { // nie zaczytujemy '.' i '..'
