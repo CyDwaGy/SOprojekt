@@ -52,7 +52,6 @@ int CheckDateDiff(char *path1, char *path2)
     struct stat time2;
     stat(path1, &time);
     stat(path2, &time2);
-	printf("lol %lf\n",difftime(time.st_mtime,time2.st_mtime));
     if(difftime(time.st_mtime,time2.st_mtime)==0.0) return 0;
     else return 1;
 }

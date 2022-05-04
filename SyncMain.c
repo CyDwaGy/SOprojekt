@@ -87,24 +87,20 @@ int main(int arc,char * argv[]){
 	char tmp[100];
 	source[strlen(source)-1] = '\0';
 	destiny[strlen(destiny)-1] = '\0';
-//	start_daemon();
+	start_daemon();
     while(1)
    {
-//	printf("Synchronizacja\n");
         DelDir(source, destiny, R);
         CopyDir(source,destiny,R,S);
-//	printf("Sen\n");
         a=toSleep(T);
 	if(a==2){
 		sprintf(tmp, "Budzenie po %ds", T);
                 Log(tmp);
-//		printf("Budzenie po %ds\n",T);
 	}
 	else if (a==1)
 	{
 		sprintf(tmp,"Budzenie po Siguser1");
                 Log(tmp);
-//		printf("Budzenie po Siguser1\n");
 	}
 	else
 		printf("Blad");
