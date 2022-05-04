@@ -71,5 +71,5 @@ int CopyDuzy(char * pathF,char * pathT)
 		n = write(fileT,map=map+n,size-=n);
 	}while(size>0);
 	close(fileT);
-	return 0;
+	return 1;
 }
