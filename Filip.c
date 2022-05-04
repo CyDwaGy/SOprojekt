@@ -2,6 +2,7 @@
 // Created by Filip on 05.04.2022.
 //
 #define _GNU_SOURCE
+#include <time.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/stat.h>
@@ -51,8 +52,8 @@ int CheckDateDiff(char *path1, char *path2)
     struct stat time2;
     stat(path1, &time);
     stat(path2, &time2);
-	printf("lol %d || %d\n",ctime(&time.st_mtime) ,ctime(&time2.st_mtime));
-    if(&time.st_mtime==&time2.st_mtime) return 1;
-    else return 0;
+	printf("lol %lf\n",difftime(time.st_mtime,time2.st_mtime));
+    if(difftime(time.st_mtime,time2.st_mtime)==0.0) return 0;
+    else return 1;
 }
 
