@@ -87,7 +87,7 @@ int main(int arc,char * argv[]){
 	char tmp[100];
 	source[strlen(source)-1] = '\0';
 	destiny[strlen(destiny)-1] = '\0';
-	start_daemon();
+//	start_daemon();
     while(1)
    {
 //	printf("Synchronizacja\n");

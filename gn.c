@@ -61,7 +61,7 @@ int DelDir(char *pathF, char *pathT, int recurrence) {
                 sprintf(tmpT, "%s/%s", pathT, dir->d_name);
                 sprintf(tmpF, "%s/%s", pathF, dir->d_name);
                 x = CheckIfExist(tmpF);
-                if(dir->d_type!=DT_LNK && x == 0) {
+                if((dir->d_type==8 ||dir->d_type==4) &&x == 0) {
                     delDir(tmpT);
                     sprintf(tmp, "Usunięto plik %s", tmpT);
                     Log(tmp);
@@ -99,8 +99,11 @@ int CopyDir(char *pathF, char *pathT, int recurrence, unsigned long long int siz
                         CopyDir(tmpF, tmpT, 1, size);
                     }
                 } else {
+		printf("\n %s, %d \n",dir->d_name, dir->d_type);
+		printf("\n %s %s, %d \n",tmpF,tmpT,CheckDateDiff(tmpF,tmpT));
+
                     if (CheckDateDiff(tmpF, tmpT)==1 || CheckIfExist(tmpT)==0)
-                        if(dir->d_type==DT_REG){
+	                if(dir->d_type==8 ||dir->d_type==4) {
                             Copy(tmpF, tmpT, size);}
                 }
             }

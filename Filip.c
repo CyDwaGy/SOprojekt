@@ -2,6 +2,7 @@
 // Created by Filip on 05.04.2022.
 //
 #define _GNU_SOURCE
+#include <unistd.h>
 #include <stdio.h>
 #include <sys/stat.h>
 #include <string.h>
@@ -22,9 +23,16 @@ int CheckIfRegular( char *path)
 }
 int CheckIfExist(char *path)
 {
-    struct stat type;
-    if(stat(path, &type)==1) return 1;
-    else return 0;
+    if( access( path, F_OK ) != -1)
+    {
+	return 1;
+    }
+    else
+    {
+	return 0;
+    }
+    return -1;
+
 }
 int CheckIfLink(char *path)
 {
@@ -40,14 +48,11 @@ int CheckDateDiff(char *path1, char *path2)
     if(CheckIfKatalog(path1) != 0) return -1;
     if(CheckIfKatalog(path2) != 0) return -1;
     struct stat time;
+    struct stat time2;
     stat(path1, &time);
-
-    long long file1_time = time.st_mtime;
-    //printf("Last modified time: %lld\n", file1_time);
-    stat(path2, &time);
-    long long file2_time = time.st_mtime;
-    //printf("Last modified time: %lld\n", file2_time);
-    if (file1_time == file2_time) return 1;
+    stat(path2, &time2);
+	printf("lol %d || %d\n",ctime(&time.st_mtime) ,ctime(&time2.st_mtime));
+    if(&time.st_mtime==&time2.st_mtime) return 1;
     else return 0;
 }
 
